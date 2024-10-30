@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class Agent : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField]
     private NavMeshAgent _navMeshAgent;
     private Transform _target;
 
