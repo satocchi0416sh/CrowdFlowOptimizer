@@ -22,4 +22,12 @@ public class Agent : MonoBehaviour
             _navMeshAgent.SetDestination(_target.position);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Target"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }

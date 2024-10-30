@@ -28,6 +28,13 @@ public class SimulationManager : MonoBehaviour
 
     private void Update()
     {
+        int count = 0;
+        foreach (var agent in _agents)
+        {
+            if (agent != null)
+                count++;
+        }
+        if (count == 0) return;
         _timeToExit += Time.deltaTime;
         _timeText.text = $"Time: {_timeToExit:F2}";
     }
