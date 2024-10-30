@@ -5,9 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [Serializable]
-public class SpawnPoint
+public class Point
 {
-    public Transform Transform;
+    public Transform SpawnPoint;
+    public Transform TargetPoint;
     public int NumberOfAgents;
 }
 
@@ -18,25 +19,24 @@ public class SimulationManager : MonoBehaviour
     private List<Agent> _agents = new();
 
     [SerializeField] private GameObject _agentPrefab;
-    [SerializeField] private Transform _target;
     [SerializeField] private Text _timeText;
-    [SerializeField] private SpawnPoint[] _spawnPoints;
+    [SerializeField] private Point[] _spawnPoints;
 
     private void Start()
     {
         foreach (var spawnPoint in _spawnPoints)
         {
-            SpawnAgents(spawnPoint.Transform, spawnPoint.NumberOfAgents);
+            SpawnAgents(spawnPoint.SpawnPoint, spawnPoint.TargetPoint, spawnPoint.NumberOfAgents);
         }
     }
 
-    private void SpawnAgents(Transform spawnPoint, int numberOfAgents)
+    private void SpawnAgents(Transform spawnPoint, Transform targetPoint, int numberOfAgents)
     {
         for (int i = 0; i < numberOfAgents; i++)
         {
             GameObject agentGameObject = Instantiate(_agentPrefab, spawnPoint.position, Quaternion.identity);
             Agent agent = agentGameObject.GetComponent<Agent>();
-            agent.InitializeAgent(_target);
+            agent.InitializeAgent(targetPoint);
             _agents.Add(agent);
         }
     }
