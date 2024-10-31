@@ -116,3 +116,55 @@ public class SimulationManager : MonoBehaviour
 - **シミュレーションが動作しない**: Unityのバージョンが推奨されるバージョンか確認してください。また、`NavMeshAgent`がシーンに正しく配置されているか確認します。
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
+
+## シミュレーション機能の詳細設定
+
+### 1. エージェントの出現数を変更する
+
+**Pointクラス**の`NumberOfAgents`プロパティにより、各スタート地点から出現するエージェントの数を設定できます。
+
+```csharp
+[Serializable]
+public class Point
+{
+    public Transform SpawnPoint;
+    public Transform TargetPoint;
+    public int NumberOfAgents;
+}
+```
+
+- **NumberOfAgents**: 出現させたいエージェントの数を指定。UnityエディタのInspectorから各スタート地点ごとに数を設定できます。
+- 各`Point`オブジェクトは、特定の出発地点と到達目標（ゴール）を持ち、それに基づいてエージェントの出現数が決定されます。
+
+### 2. スタートとゴール地点の設定
+
+**SimulationManager.cs**
+
+```csharp
+[SerializeField] private Point[] _spawnPoints;
+```
+
+- **Point[] _spawnPoints**: 複数のスタート地点とゴール地点、エージェント数の情報を保持。Inspectorから複数の地点とその対応するゴールを簡単に設定可能です。
+
+各`Point`のプロパティとして`SpawnPoint`（スタート地点）と`TargetPoint`（ゴール地点）を設定でき、シミュレーションでの柔軟な動作が可能になります。
+
+### 3. 障害物の設定と移動
+
+シミュレーション内の障害物は、Unityエディタのヒエラルキー内に配置して簡単に動かせます。
+
+- 障害物を移動または複製することで、シミュレーションの環境を変更可能。
+- NavMesh設定は**Navigation**（[Window] → [AI] → [Navigation（Obsolete）]）内の**Bake**タブから再設定できます。
+
+### 4. タイマーの停止（ゴール到達時）
+
+- エージェントがゴールに触れると、自動的に消去されます（`OnTriggerEnter`メソッド内で実装）。
+- `SimulationManager`内で全エージェントが消えたことを確認したら、タイマーを停止します。
+
+### 5. 出入口が二つある場合
+
+エージェントは最短経路を自動的に探索し、最も近いドアを通るルートを選びます。
+
+### 6. 複数のスタート・ゴール地点設定
+
+- **複数のスタート地点**や**ゴール地点**を`Point`クラスのプロパティで設定可能。
+- 各エージェントは、対応するスタート地点とゴール地点に従って動作します。
