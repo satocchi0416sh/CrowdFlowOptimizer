@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public class Point
@@ -34,7 +34,8 @@ public class SimulationManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfAgents; i++)
         {
-            GameObject agentGameObject = Instantiate(_agentPrefab, spawnPoint.position, Quaternion.identity);
+            var randomPos = new Vector3(Random.Range(-0.01f, 0.01f), 0, Random.Range(-0.01f, 0.01f));
+            GameObject agentGameObject = Instantiate(_agentPrefab, spawnPoint.position + randomPos, Quaternion.identity);
             Agent agent = agentGameObject.GetComponent<Agent>();
             agent.InitializeAgent(targetPoint);
             _agents.Add(agent);
