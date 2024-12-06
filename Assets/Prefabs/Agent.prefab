@@ -1230,7 +1230,7 @@ GameObject:
   - component: {fileID: 5043972958825663376}
   m_Layer: 0
   m_Name: Agent
-  m_TagString: Untagged
+  m_TagString: Agent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1308,6 +1308,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 1046709194942713753}
+  _beamLength: 0.5
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!136 &4903525802837603358
 CapsuleCollider:
   m_ObjectHideFlags: 0
